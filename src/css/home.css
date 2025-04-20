@@ -1,0 +1,94 @@
+/* home.css */
+
+/* Container styling */
+.home-container {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  /* Title and Subtitle */
+  .home-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+  }
+  
+  .home-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  
+  /* Carousel Image */
+  .carousel-image {
+    max-height: 500px;
+    object-fit: cover;
+  }
+  
+  /* Info Box Below Image */
+  .carousel-info-box {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    border: 1px solid #ddd;
+    border-top: none; /* Remove the top border to merge the image and info box visually */
+    text-align: center;
+    position: relative; /* To position the button properly */
+  }
+  
+  .carousel-caption-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .carousel-caption-text {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  /* View Info Button Styling */
+  .view-info-btn {
+    display: inline-block;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    margin-top: 15px; /* Space above the button */
+  }
+  
+  .view-info-btn:hover,
+  .view-info-btn:focus {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    outline: none; /* Remove default focus outline */
+  }
+  
+  /* Ensure proper spacing */
+  .home-carousel {
+    margin-bottom: 30px;
+  }
+  
+  /* Smooth Carousel Transition */
+  .carousel-item {
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .carousel-fade .carousel-item {
+    opacity: 0;
+  }
+  
+  .carousel-fade .carousel-item-next,
+  .carousel-fade .carousel-item-prev,
+  .carousel-fade .carousel-item-active {
+    opacity: 1;
+  }
+  

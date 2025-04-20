@@ -1,0 +1,55 @@
+/* Navbar.css */
+.navbar {
+    position: relative;
+  }
+  
+  .navbar-dark .navbar-toggler {
+    border: none; /* Remove default border */
+  }
+  
+  .navbar-toggler {
+    background: transparent;
+    border: none; /* Ensure there's no border */
+  }
+  
+  .navbar-toggler svg {
+    color: #fff;
+  }
+  
+  .navbar-collapse {
+    transition: max-height 0.3s ease; /* Smooth transition */
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+  }
+  
+  .navbar-collapse.show {
+    max-height: 500px; /* Adjust this value based on your content */
+  }
+  
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      position: absolute;
+      top: 56px; /* Adjust this based on the height of the navbar */
+      left: 0;
+      right: 0;
+      background: #343a40; /* Ensure background color matches */
+      z-index: 1000; /* Make sure it overlays content */
+      display: flex;
+      flex-direction: column; /* Stack links vertically */
+    }
+  
+    .navbar-nav .nav-link {
+      padding: 10px 15px; /* Adjust padding for better clickability */
+    }
+  
+    .navbar-collapse.collapse {
+      display: none; /* Hide the collapse when not in use */
+    }
+  
+    .navbar-collapse.show {
+      display: flex; /* Show the navbar when expanded */
+    }
+  }
+  
