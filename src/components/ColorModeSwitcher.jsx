@@ -1,5 +1,6 @@
 import { useColorMode, useColorModeValue, IconButton, Tooltip } from '@chakra-ui/react';
 import { FaMoon, FaSun } from 'react-icons/fa';
+// eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types';
 
 const ColorModeSwitcher = (props) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { 
   Box, 
@@ -18,12 +19,11 @@ import {
   Image,
   Card,
   CardBody,
-  CardHeader,
-  CardFooter,
+  
   Divider,
   Alert,
   AlertIcon,
-  Spinner,
+ 
   Select,
   useColorModeValue
 } from '@chakra-ui/react';
@@ -43,6 +43,10 @@ const BuyTicket = () => {
   const [orderId, setOrderId] = useState("");
   const [visitDate, setVisitDate] = useState('');
   const [visitorType, setVisitorType] = useState('Indian');
+  
+  const cardBg = useColorModeValue('white', 'gray.700');
+  const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const priceBg = useColorModeValue('blue.50', 'blue.900');
 
   // Get tomorrow's date for min date in the date picker
   const tomorrow = new Date();
@@ -128,24 +132,12 @@ const BuyTicket = () => {
         customer_email: customerEmail,
         ticketCount: ticketCount,
         visitor_type: visitorType,
-        visit_date: visitDate
+        visit_date: visitDate,
+        place_name: place ? place.name : "Museum"
       });
       if (res.data && res.data.payment_session_id) {
         setOrderId(res.data.order_id);
         return res.data.payment_session_id;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const verifyPayment = async () => {
-    try {
-      const res = await axios.post("http://localhost:5001/verify", {
-        orderId: orderId
-      });
-      if (res && res.data) {
-        alert("Payment verified");
       }
     } catch (error) {
       console.log(error);
@@ -157,18 +149,30 @@ const BuyTicket = () => {
     setIsLoading(true);
     setError(null);
     try {
-      alert('Payment processing...');
       let sessionId = await getSessionId();
+      
+      if (!sessionId) {
+        setError('Payment initialization failed. Please try again.');
+        setIsLoading(false);
+        return;
+      }
+      
       let checkoutOptions = {
         paymentSessionId: sessionId,
-        redirectTarget: "_modal",
+        redirectTarget: "_self"
       };
-      cashfree.checkout(checkoutOptions).then(() => {
-        verifyPayment(orderId);
+      
+      cashfree.checkout(checkoutOptions).then((data) => {
+        console.log("Checkout response:", data);
+        // The server will handle redirects through the return_url in payment request
+      }).catch(err => {
+        console.error("Checkout error:", err);
+        setError('Payment processing failed. Please try again.');
+        setIsLoading(false);
       });
     } catch (err) {
+      console.error("Payment error:", err);
       setError('Failed to process the payment. Please try again.');
-    } finally {
       setIsLoading(false);
     }
   };
@@ -182,9 +186,6 @@ const BuyTicket = () => {
     };
     return basePrices[visitorType] || 100;
   };
-
-  const cardBg = useColorModeValue('white', 'gray.700');
-  const borderColor = useColorModeValue('gray.200', 'gray.600');
 
   return (
     <Container maxW="container.md" py={10}>
@@ -285,7 +286,7 @@ const BuyTicket = () => {
                     </NumberInput>
                   </FormControl>
                   
-                  <Box p={4} bg={useColorModeValue('blue.50', 'blue.900')} borderRadius="md" mt={2}>
+                  <Box p={4} bg={priceBg} borderRadius="md" mt={2}>
                     <Text fontWeight="bold">Ticket Price: ₹{getTicketPrice()} per person</Text>
                     <Text fontWeight="bold">Total: ₹{getTicketPrice() * ticketCount}</Text>
                   </Box>
@@ -300,6 +301,29 @@ const BuyTicket = () => {
                     loadingText="Processing..."
                   >
                     Pay ₹{getTicketPrice() * ticketCount}
+                  </Button>
+                  
+                  {/* Test button for direct navigation - remove in production */}
+                  <Button
+                    mt={2}
+                    colorScheme="gray"
+                    size="sm"
+                    width="100%"
+                    onClick={() => {
+                      const testParams = new URLSearchParams({
+                        order_id: 'TEST' + Math.random().toString(36).substring(2, 8),
+                        payment_status: 'SUCCESS',
+                        customer_name: customerName || 'Test User',
+                        customer_email: customerEmail || 'test@example.com',
+                        visitor_type: visitorType,
+                        ticket_count: ticketCount,
+                        visit_date: visitDate || '2023-12-31',
+                        place_name: place ? place.name : 'Museum'
+                      });
+                      window.location.href = `/ticket-success?${testParams.toString()}`;
+                    }}
+                  >
+                    Test Direct Link
                   </Button>
                 </VStack>
               </Box>

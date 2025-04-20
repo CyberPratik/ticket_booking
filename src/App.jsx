@@ -7,6 +7,7 @@ import BookingPage from './components/BookingPage';
 import Navigation from './components/Navbar';
 import BuyTicket from './components/BuyTicket';
 import ContactUs from './components/ContactUs';
+import TicketSuccess from './components/TicketSuccess';
 
 function App() {
   const bgColor = useColorModeValue('gray.50', 'gray.900');
@@ -23,6 +24,7 @@ function App() {
             <Route path="/museums/:id" element={<MuseumDetails />} />
             <Route path="/book/:id" element={<BookingPage />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/ticket-success" element={<TicketSuccess />} />
           </Routes>
         </Box>
       </Box>
