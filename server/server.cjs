@@ -41,7 +41,7 @@ app.post("/payment", async (req, res) => {
 
     // Create the base URL without the dynamic parameters
     const orderId = await generateOrderId();
-    const baseUrl = "http://localhost:5173/ticket-success";
+    const baseUrl = "https://ticket-booking-tnuj.onrender.com/ticket-success";
     const successUrl = `${baseUrl}?order_id=${orderId}&payment_status=SUCCESS&customer_name=${encodeURIComponent(
       customer_name
     )}&customer_email=${encodeURIComponent(
@@ -66,7 +66,7 @@ app.post("/payment", async (req, res) => {
       },
       order_meta: {
         return_url: successUrl,
-        notify_url: "http://localhost:5001/webhook",
+        notify_url: "https://ticket-booking-tnuj.onrender.com/webhook",
       },
     };
 
